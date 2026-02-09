@@ -125,10 +125,12 @@ function _prompt_menu_draws() {
 
 function _prompt_menu_draw() {
   local modes=(error success)
+  local label="${menu_options[$2]}"
+  [[ "${menu_labels[$2]}" ]] && label="${menu_labels[$2]}"
   if [[ "$3" ]]; then
-    e_${modes[$1]} "$(printf "%2d) %s\n" $(($2+1)) "${menu_options[$2]}")"
+    e_${modes[$1]} "$(printf "%2d) %s\n" $(($2+1)) "$label")"
   else
-    e_${modes[$1]} "${menu_options[$2]}"
+    e_${modes[$1]} "$label"
   fi
 }
 
@@ -274,11 +276,18 @@ trap cleanup EXIT
 # Initialize.
 init_file=$DOTFILES/caches/init/selected
 function init_files() {
-  local i f dirname oses os opt remove
+  local i f dirname oses os opt remove label
   dirname="$(dirname "$1")"
   f=("$@")
-  menu_options=(); menu_selects=()
-  for i in "${!f[@]}"; do menu_options[i]="$(basename "${f[i]}")"; done
+  menu_options=(); menu_selects=(); menu_labels=()
+  for i in "${!f[@]}"; do
+    menu_options[i]="$(basename "${f[i]}")"
+    label="${menu_options[i]}"
+    label="${label%.*}"
+    label="${label#[0-9]*_}"
+    label="${label//_/ }"
+    menu_labels[i]="$(echo "$label" | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')"
+  done
   if [[ -e "$init_file" ]]; then
     # Read cache file if possible
     IFS=$'\n' read -d '' -r -a menu_selects < "$init_file"
