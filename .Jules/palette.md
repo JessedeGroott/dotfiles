@@ -1,0 +1,3 @@
+## 2026-03-05 - Avoid false alarm errors in CLI logs
+**Learning:** Using negative visual cues (like a red ✖ or the word 'error') for neutral states or expected skips creates false alarm fatigue. Users scan logs for red to find actual failures. When unselected menu options or intentionally skipped idempotent files (like "same file") use error formatting, it masks real issues and makes the script look broken when it isn't.
+**Action:** Use neutral indicators (like a white ○) for unselected options and success/warning indicators (✔ or ⚠️) for non-error skips. Reserve red ✖ strictly for actionable failures.
