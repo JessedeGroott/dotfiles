@@ -1,0 +1,3 @@
+## 2024-05-18 - Reduce visual noise by using neutral/informational indicators instead of false-alarms
+**Learning:** Using red error icons (✖) for neutral states (like unselected menu options) or successful idempotent operations (like skipping a file because it's already up-to-date) causes unnecessary anxiety and confusion for users.
+**Action:** Replace `e_error` with `e_option` (○) for neutral choices and `e_success` (✔) or `e_warning` (⚠️) for non-fatal file skips to make the terminal output more reassuring and accurate.
