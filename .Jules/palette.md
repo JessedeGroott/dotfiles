@@ -1,0 +1,3 @@
+## 2024-05-24 - Avoid Error Iconography for Neutral States
+**Learning:** Using an error icon (like a red "✖") for unselected menu options creates unnecessary cognitive friction. It incorrectly implies a negative state or action required rather than a neutral, available option.
+**Action:** Replace error-like indicators with neutral visual cues (like a white "○") for unselected or available states in CLI menus.
