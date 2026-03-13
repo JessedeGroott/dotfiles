@@ -1,0 +1,3 @@
+## 2024-05-18 - Reduce false alarms in CLI output
+**Learning:** Using an error state (red X) for merely unselected items or safely skipped items (like identical files) creates false alarms for users, making actual errors harder to spot.
+**Action:** Introduced a neutral `e_option` (white circle) for unselected items and `e_warning` (yellow warning) for skipped files, saving the red `e_error` strictly for true failures.
