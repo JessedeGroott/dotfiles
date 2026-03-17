@@ -1,0 +1,3 @@
+## 2024-05-18 - [CLI Menu Option Readability]
+**Learning:** Raw script filenames (e.g., `10_osx_xcode.sh`) in interactive menus are hard to read and scan. `sed` and `awk` can elegantly strip numeric prefixes, extensions, and underscores to present title-cased, human-readable labels without altering the backend file execution logic. Also, using red/error styling for unselected items creates false alarms; a neutral styling (like `○`) is much better for checkboxes/options.
+**Action:** Always map internal identifiers to human-readable strings in CLI menus, and reserve error colors only for actual errors.
