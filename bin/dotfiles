@@ -28,6 +28,7 @@ function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
 function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
 function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;34m➜\033[0m  $@"; }
+function e_option()   { echo -e " \033[1;37m○\033[0m  $@"; }
 
 # For testing some of these functions.
 function assert() {
@@ -124,11 +125,13 @@ function _prompt_menu_draws() {
 }
 
 function _prompt_menu_draw() {
-  local modes=(error success)
+  local modes=(option success)
+  local label="${menu_options[$2]}"
+  label="$(echo "$label" | sed -e 's/^[0-9]*_//' -e 's/\.[^.]*$//' -e 's/_/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')"
   if [[ "$3" ]]; then
-    e_${modes[$1]} "$(printf "%2d) %s\n" $(($2+1)) "${menu_options[$2]}")"
+    e_${modes[$1]} "$(printf "%2d) %s\n" $(($2+1)) "$label")"
   else
-    e_${modes[$1]} "${menu_options[$2]}"
+    e_${modes[$1]} "$label"
   fi
 }
 
