@@ -1,0 +1,3 @@
+## 2024-05-24 - Refine Terminal Feedback State Representation
+**Learning:** Terminal scripts heavily lean on error coloring (red, X marks) for non-error informative states (e.g. unselected menu options, or skipping a file copy because the file is identical). This causes "false alarm" anxiety and diminishes the impact of actual errors.
+**Action:** Created neutral visual representations (e.g. white '○' via `e_option` for unselected choices) and used affirmative success colors (green '✔' via `e_success`) for idempotent operations like "same file" skips. Reserve red error states exclusively for actual failures requiring user intervention.
