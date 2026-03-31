@@ -47,7 +47,7 @@ alias __prompt_get_colors='__prompt_colors[9]=; local i; for i in ${!__prompt_co
 # Exit code of previous command.
 function __prompt_exit_code() {
   __prompt_get_colors
-  [[ $1 != 0 ]] && echo " $c2$1$c9"
+  [[ $1 != 0 ]] && echo " $c2✖ $1$c9"
 }
 
 # Git status.
