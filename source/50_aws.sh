@@ -1,4 +1,3 @@
-
 # Get currently logged in aws account name
 function aws-account() {
   aws iam list-account-aliases | jq ".AccountAliases[0]" -r
@@ -16,15 +15,38 @@ function aws-list-services() {
 
 # List all services by cluster for the current role
 function aws-list-services-by-cluster() {
-  local clusters services
+  local clusters
   clusters=($(aws-list-clusters))
+
+  if [[ ${#clusters[@]} -eq 0 ]]; then
+    return 0
+  fi
+
+  local tmpdir
+  tmpdir=$(mktemp -d)
+
   for c in "${clusters[@]}"; do
-    services=($(aws-list-services $c))
-    for s in "${services[@]}"; do
-      echo "$c $s"
-    done
-    [[ ${#services[@]} > 0 ]] && echo
+    (
+      local services
+      services=($(aws-list-services $c))
+      if [[ ${#services[@]} -gt 0 ]]; then
+        for s in "${services[@]}"; do
+          echo "$c $s"
+        done
+        echo
+      fi
+    ) > "$tmpdir/$c" &
   done
+
+  wait
+
+  for c in "${clusters[@]}"; do
+    if [[ -s "$tmpdir/$c" ]]; then
+      cat "$tmpdir/$c"
+    fi
+  done
+
+  rm -rf "$tmpdir"
 }
 
 # List all aws tasks for the given cluster and service
