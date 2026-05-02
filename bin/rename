@@ -155,6 +155,7 @@ This script is free software; you can redistribute it and/or modify it under the
 
 =cut
 
+use Safe;
 use Pod::Usage;
 use Getopt::Long 2.24, qw(:config bundling no_ignore_case no_auto_abbrev);
 
@@ -241,7 +242,11 @@ my $code = do {
 	my $cat = "sub { ".join('; ', @EXPR)." }";
 	warn DEBUG, "Using expression: $cat";
 
-	my $evaled = eval $cat;
+	my $compartment = Safe->new;
+	$compartment->permit_only(qw(:default));
+	$compartment->share(qw($_));
+
+	my $evaled = $compartment->reval($cat);
 	die $@ if $@;
 	die "Evaluation to subref failed. Check expression using -vn\n"
 		unless 'CODE' eq ref $evaled;
