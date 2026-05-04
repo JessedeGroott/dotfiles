@@ -1,3 +1,7 @@
 ## 2024-05-15 - Improved CLI menu readability
 **Learning:** The previous terminal menu implementation displayed raw script filenames (e.g., `10_osx_xcode.sh`) and used an error icon/color (`✖`) for unselected options, which was confusing and visually distressing for users navigating the setup wizard.
 **Action:** Transformed raw filenames into human-readable labels (Title Case, no numbers/extensions) in the display layer while keeping the underlying execution logic intact. Also replaced the error icon with a neutral option icon (`○`) for unselected items.
+
+## 2024-05-16 - Differentiate skip messages
+**Learning:** Overusing the error indicator (`✖`) for non-fatal, expected actions (like skipping a file because it's already identical or newer) causes false alarms and desensitizes users to actual errors.
+**Action:** Implemented semantic status indicators for file skips: `✔` (success) for successful idempotency (e.g. "same file"), `⚠️` (warning) for acceptable non-actions (e.g. "destination newer"), reserving `✖` for genuine failures.
