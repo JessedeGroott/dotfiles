@@ -1,3 +1,6 @@
 ## 2024-05-15 - Improved CLI menu readability
 **Learning:** The previous terminal menu implementation displayed raw script filenames (e.g., `10_osx_xcode.sh`) and used an error icon/color (`✖`) for unselected options, which was confusing and visually distressing for users navigating the setup wizard.
 **Action:** Transformed raw filenames into human-readable labels (Title Case, no numbers/extensions) in the display layer while keeping the underlying execution logic intact. Also replaced the error icon with a neutral option icon (`○`) for unselected items.
+## 2024-05-16 - Differentiate idempotent skips from actual errors
+**Learning:** The CLI setup script treated all skipped files (e.g., when a file already exists and is identical) as generic "errors" using a red `✖` and the `e_error` helper. This created false alarm fatigue for users running the initialization script multiple times, making it seem like the installation was failing when it was actually just skipping redundant work gracefully.
+**Action:** Introduced a distinct `e_warning` helper with a yellow `⚠️` icon to report non-fatal conditions, and used `e_success` (`✔`) for explicitly idempotent "same file" skips. This clarifies to the user that the system state is healthy and functioning as expected without throwing false errors.
