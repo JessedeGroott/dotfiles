@@ -5,3 +5,6 @@
 ## 2024-07-08 - Use semantic severity for skipped files
 **Learning:** Using red error icons (✖) for non-fatal skips or already-correct states (idempotency) visually distresses users and creates false alarms during setup.
 **Action:** Implemented semantic feedback severity: green (✔) for idempotent success ("same file"), yellow (⚠️) for non-fatal skips, and strictly reserving red (✖) for fatal operations blocking user intent.
+## 2024-07-25 - Improve list readability in CLI
+**Learning:** Flat lists in CLI output can be hard to read when there are many items. Indented bullet points create a visual hierarchy and improve scannability.
+**Action:** Use indented bullet points (e.g., `  - item`) instead of flat lists for summarizing output in terminal tools.
